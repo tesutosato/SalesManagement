@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('company_id');
+            $table->string('product_name');
+            $table->integer('price');
+            $table->integer('stock');
+            $table->text('comment')->nullable();
+            $table->string('img_path');
             $table->timestamps();
         });
     }
