@@ -1,8 +1,10 @@
-@extends('app')
+<!DOCTYPE html>
+<!-- @extends('app')
 
-@section('content')
-
-    <div class="r">
+@section('content') -->
+<body>
+    
+    <div>
         <div>
             <div>
                 <h2>商品情報一覧</h2>
@@ -12,4 +14,5 @@
             </div>
         </div>
     </div>
-@endsection
+    <!-- @endsection -->
+</body>

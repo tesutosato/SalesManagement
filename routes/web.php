@@ -17,8 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// 以下２行はAuth作成時に自動作成。消さない
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/products', 'App\Http\Controllers\HomeController@index')->name('product.index');
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
