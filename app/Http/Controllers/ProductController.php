@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -14,10 +16,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $products = Product::latest()->paginate(5);
-        // return view('index',compact('products'))
-        // ->with('i', (request()->input('page', 1) - 1) * 5);
-        return view('index');
+        // 試しに別の方法でテストする為、下記３行を一旦コメントアウト
+        return view('index', [
+            'products' => DB::table('products')->paginate(5)
+        ]);
+
+        // $products = Product::paginate(6);
+        // return view('index',['products' => $products]);
     }
 
     /**
@@ -27,7 +32,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**

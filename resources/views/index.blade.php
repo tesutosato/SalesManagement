@@ -1,18 +1,39 @@
-<!DOCTYPE html>
-<!-- @extends('app')
+@extends('app')
 
-@section('content') -->
-<body>
+@section('content')
     
-    <div>
-        <div>
+    <div class="row">
+        <div class="col-lg-12">
             <div>
-                <h2>商品情報一覧</h2>
+                <h1>商品情報一覧</h1>
             </div>
             <div>
-                <a class="btn" href="#">新規登録</a>
+                <button type="button" class="btn" href="#">新規登録</button>
             </div>
         </div>
     </div>
-    <!-- @endsection -->
-</body>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>商品画像</th>
+            <th>価格</th>
+            <th>在庫数</th>
+            <th>メーカー名</th>
+        </tr>
+        @foreach ($products as $product)
+        <tr>
+            <td>{{ $product->id }}</td>
+            <td>{{ $product->img_path }}</td>
+            <td>{{ $product->price }}</td>
+            <td>{{ $product->stock }}</td>
+            <td>{{ $product->company_id }}</td>
+            <td><button type="button" class="btn">詳細</td>
+            <td><button type="button" class="btn">削除</td>
+        </tr>
+        @endforeach
+    </table>
+
+{!! $products->links('pagination::bootstrap-5') !!}
+<!-- {!! $products->render() !!} -->
+    @endsection
