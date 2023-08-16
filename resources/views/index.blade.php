@@ -8,7 +8,7 @@
                 <h1>商品情報一覧</h1>
             </div>
             <div>
-                <button type="button" class="btn" href="#">新規登録</button>
+                <a class="btn btn-success" href="{{ route('create') }}">新規登録</a>
             </div>
         </div>
     </div>

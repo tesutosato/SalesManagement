@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Company;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // 試しに別の方法でテストする為、下記３行を一旦コメントアウト
         return view('index', [
             'products' => DB::table('products')->paginate(5)
         ]);
@@ -32,7 +32,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('create');
+        $companies = Company::all();
+        return view('create')
+            ->with('companies', $companies);
     }
 
     /**
