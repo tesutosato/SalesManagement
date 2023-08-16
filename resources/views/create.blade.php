@@ -19,6 +19,9 @@
             </div>
             <div>
                 <input type="text" name="name" class="form-control">
+                @error('product_name')
+                <span>商品名を20文字以内で入力してください</span>
+                @enderror
             </div>
         </div>
         <div>
@@ -27,11 +30,14 @@
             </div>
             <div>
                 <select name="company" class="form-select">
-                    <option>選択してください</option>
+                    <option hidden>選択してください</option>
                     @foreach ($companies as $company)
                         <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                     @endforeach
                 </select>
+                @error('company_id')
+                <span>メーカーを選択してください</span>
+                @enderror
             </div>
         </div>
         <div>
@@ -40,6 +46,9 @@
             </div>
             <div>
                 <input type="text" name="name" class="form-control">
+                @error('price')
+                <span>価格を数字で入力してください</span>
+                @enderror
             </div>
         </div>
         <div>
@@ -48,6 +57,9 @@
             </div>
             <div>
                 <input type="text" name="name" class="form-control">
+                @error('stock')
+                <span>在庫数を数字で入力してください</span>
+                @enderror
             </div>
         </div>
         <div>
