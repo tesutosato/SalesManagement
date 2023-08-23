@@ -16,6 +16,7 @@
     <table>
         <tr>
             <th>ID</th>
+            <th>商品名</th>
             <th>商品画像</th>
             <th>価格</th>
             <th>在庫数</th>
@@ -24,7 +25,8 @@
         @foreach ($products as $product)
         <tr>
             <td>{{ $product->id }}</td>
-            <td>{{ $product->img_path }}</td>
+            <td>{{ $product->product_name }}</td>
+            <td><img src="{{ $product->img_path }}"></td>
             <td>{{ $product->price }}</td>
             <td>{{ $product->stock }}</td>
             <td>{{ $product->company_id }}</td>
@@ -35,5 +37,4 @@
     </table>
 
 {!! $products->links('pagination::bootstrap-5') !!}
-<!-- {!! $products->render() !!} -->
-    @endsection
+@endsection

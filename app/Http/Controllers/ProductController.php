@@ -46,13 +46,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_name' => 'required|max20',
-            'img_path' => 'required',
+            // 'product_name' => 'required|max20',
+            // 'img_path' => 'required',
             'price' => 'required|integer',
             'stock' => 'required|integer',
-            'company_id' => 'required',
+            // 'company_id' => 'required|integer',
         ]);
-        
+
+        $product = new Product;
+        $product->product_name = $request->input(["product_name"]);
+        $product->company_id = $request->input(["company_id"]);
+        $product->price = $request->input(["price"]);
+        $product->stock = $request->input(["stock"]);
+        $product->comment = $request->input(["comment"]);
+        $product->img_path = $request->input(["img_path"]);
+        $product->save();
+        return redirect()->route('create')
+        ->with('success', '商品を登録しました');
     }
 
     /**
