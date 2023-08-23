@@ -26,7 +26,8 @@
         <tr>
             <td>{{ $product->id }}</td>
             <td>{{ $product->product_name }}</td>
-            <td><img src="{{ $product->img_path }}"></td>
+            <!-- <td><img src="{{ $product->img_path }}"></td> -->
+            <td><img src="{{ asset('storage/'.$product->img_path) }}" width="100px"></td>
             <td>{{ $product->price }}</td>
             <td>{{ $product->stock }}</td>
             <td>{{ $product->company_id }}</td>
