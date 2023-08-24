@@ -1,5 +1,7 @@
 @extends('app')
 
+@section('title', '商品情報一覧')
+
 @section('content')
     
     <div class="row">
