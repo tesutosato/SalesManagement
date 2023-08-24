@@ -18,9 +18,6 @@
         <div class="form-group">
             <label for="product_name">商品名</label>
             <input type="text" name="product_name" id="product_name" class="form-control">
-            @error('product_name')
-            <span>商品名を20文字以内で入力してください</span>
-            @enderror
         </div>
 
         <div>
@@ -32,25 +29,16 @@
                 <!-- <option value="{{ $company->id }}">{{ $company->id }}</option> -->
                 @endforeach
             </select>
-            @error('company_id')
-            <span>メーカーを選択してください</span>
-            @enderror
         </div>
 
         <div>
             <label for="price">価格</label>
             <input type="text" name="price" id="price" class="form-control">
-            @error('price')
-            <span>価格を数字で入力してください</span>
-            @enderror
         </div>
 
         <div>
             <label for="stock">在庫数</label>
             <input type="text" name="stock" id="stock" class="form-control">
-            @error('stock')
-            <span>在庫数を数字で入力してください</span>
-            @enderror
         </div>
 
         <div>
@@ -60,7 +48,8 @@
 
         <div>
             <label for="img_path">商品画像</label>
-            <input type="text" name="img_path" id="img_path" class="form-control">
+            <input type="file" name="img_path" id="img_path" class="form-control">
+            <button>アップロード</button>
         </div>
         <div>
             <button type="submit" class="btn btn-primary">登録</button>

@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -15,6 +16,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index(ProductRequest $request)
     public function index()
     {
         return view('index', [
@@ -29,7 +31,9 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Response
      */
+    // public function create(ProductRequest $request)
     public function create()
     {
         $companies = Company::all();
@@ -40,22 +44,49 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\ProductRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
+    // public function store()
     {
-        $product = new Product;
-        $product->product_name = $request->input(["product_name"]);
-        // $product->company_id = $request->input(["company_id"]);
-        $product->company_id = $request->input(["company_name"]);
-        $product->price = $request->input(["price"]);
-        $product->stock = $request->input(["stock"]);
-        $product->comment = $request->input(["comment"]);
-        $product->img_path = $request->input(["img_path"]);
-        $product->save();
+        // dd($request->all());
+
+        // トランザクション開始
+        DB::beginTransaction();
+
+        try {
+            // 登録処理呼び出し
+            $product = new Product();
+            // $model->registProduct($request);
+            // DB::commit();
+            $product->product_name = $request->input(["product_name"]);
+            $product->company_id = $request->input(["company_name"]);
+            $product->price = $request->input(["price"]);
+            $product->stock = $request->input(["stock"]);
+            $product->comment = $request->input(["comment"]);
+            $product->img_path = $request->input(["img_path"]);
+            $product->save();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
+    
+        // 処理が完了したら入力画面にリダイレクト
         return redirect()->route('create')
         ->with('success', '商品を登録しました');
+    
+        // $product = new Product;
+        // $product->product_name = $request->input(["product_name"]);
+        // // $product->company_id = $request->input(["company_id"]);
+        // $product->company_id = $request->input(["company_name"]);
+        // $product->price = $request->input(["price"]);
+        // $product->stock = $request->input(["stock"]);
+        // $product->comment = $request->input(["comment"]);
+        // $product->img_path = $request->input(["img_path"]);
+        // $product->save();
+        // return redirect()->route('create')
+        // ->with('success', '商品を登録しました');
     }
 
     /**
