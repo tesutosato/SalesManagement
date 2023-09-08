@@ -22,6 +22,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
-Route::get('/products/create', [App\Http\Controllers\ProductController::class, 'create'])->name('create');
-Route::post('/products/store', [App\Http\Controllers\ProductController::class, 'store'])->name('store');
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('index')->middleware('auth');
+
+Route::get('/products/create', [App\Http\Controllers\ProductController::class, 'create'])->name('create')->middleware('auth');
+Route::post('/products/store', [App\Http\Controllers\ProductController::class, 'store'])->name('store')->middleware('auth');
+
+Route::get('/products/show/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('show');
+
+Route::get('/products/edit/{product}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit');
+Route::put('/products/edit/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('update');
+
+
+Route::delete('/products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');

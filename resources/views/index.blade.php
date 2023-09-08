@@ -32,9 +32,15 @@
             <td><img src="{{ asset('storage/'.$product->img_path) }}" width="100px"></td>
             <td>{{ $product->price }}</td>
             <td>{{ $product->stock }}</td>
-            <td>{{ $product->company_id }}</td>
-            <td><button type="button" class="btn">詳細</td>
-            <td><button type="button" class="btn">削除</td>
+            <td>{{ $product->company->company_name }}</td>
+            <td><a class="btn btn-primary" href="{{ route('show', [$product->id]) }}">詳細</a>
+            <td>
+            <form action="{{route('destroy', $product->id)}}" method="POST">
+            @csrf
+            @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick='return confirm("削除しますか？");'>削除</button>
+            </form>
+            </td>
         </tr>
         @endforeach
     </table>

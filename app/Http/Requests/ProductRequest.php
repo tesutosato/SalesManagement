@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class ProductRequest extends FormRequest
 {
     /**
@@ -24,11 +25,12 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name' => 'required|max20',
+            'product_name' => 'required|max:20',
             'price' => 'required|integer',
             'stock' => 'required|integer',
             'company_name' => 'required|integer',
             'comment' => 'max:1000',
+            'img_path' => 'image',
         ];
     }
 
@@ -41,10 +43,11 @@ class ProductRequest extends FormRequest
     {
         return [
             'product_name' => '商品名',
-            'price' => '値段',
+            'price' => '価格',
             'stock' => '在庫数',
-            'company_id' => '会社名',
+            'company_name' => 'メーカー名',
             'comment' => 'コメント',
+            'img_path' => '商品画像',
         ];
     }
 
@@ -61,9 +64,10 @@ class ProductRequest extends FormRequest
             'price.integer' => ':attributeは数値で入力してください。',
             'stock.required' => ':attributeは必須項目です。',
             'stock.integer' => ':attributeは数値で入力してください。',
-            'company_id.required' => ':attributeは必須項目です。',
-            'company_id.integer' => ':attributeは数値で入力してください。',
+            'company_name.required' => ':attributeは必須項目です。',
+            'company_name.integer' => ':attributeを選択してください。',
             'comment.max' => ':attributeは:max字以内で入力してください。',
+            'img_path.image' => ':attributeのファイル形式が異なります。',
         ];
     }
 }
