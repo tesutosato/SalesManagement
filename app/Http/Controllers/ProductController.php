@@ -19,12 +19,36 @@ class ProductController extends Controller
     // public function index(ProductRequest $request)
     public function index(Request $request)
     {
-        // 外部結合を含むデータを取得
-        $products = Product::with('company') 
-        ->paginate(5);
 
-        return view('index', compact('products'))
-        ->with('page_id', request()->page);
+        $companies = Company::all();
+
+        $keyword = $request->input('keyword');
+        $searchField = $request->input('search_field');
+
+        $query = Product::with('company');
+
+        // 検索機能実装
+        if (!empty($keyword) || (!empty($searchField) && $searchField != 'company_id')) {
+            $query->where(function ($query) use ($keyword, $searchField) {
+                if (!empty($keyword)) {
+                    $query->where('id', 'LIKE', "%{$keyword}%")
+                    ->orWhere('product_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('price', 'LIKE', "%{$keyword}%")
+                    ->orWhere('stock', 'LIKE', "%{$keyword}%");
+                }
+
+                if (!empty($searchField) && $searchField != 'company_id') {
+                    $query->orWhereHas('company', function ($query) use ($searchField) {
+                        $query->where('id', $searchField);
+                    });
+                }
+            });
+        }
+        
+        $products = $query->paginate(5);
+
+        return view('index', compact('products', 'companies'))
+            ->with('page_id', request()->page);
     }
 
     /**
@@ -33,7 +57,6 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      * @param \Illuminate\Http\Response
      */
-    // public function create(ProductRequest $request)
     public function create()
     {
         $companies = Company::all();
@@ -48,33 +71,17 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
-    // public function store()
     {
         // トランザクション開始
         DB::beginTransaction();
 
         try {
-            // ファイルをアップロードして保存
-            // $file_name = $request->file('img_path')->getClientOriginalName();
-            // $request->file('img_path')->storeAs('public/', $file_name);
-
-            // 登録処理呼び出し
-            // $product = Product::create([
-            //     'product_name' => $request->input('product_name'),
-            //     'company_id' => $request->input('company_name'),
-            //     'price' => $request->input('price'),
-            //     'stock' => $request->input('stock'),
-            //     'comment' => $request->input('comment'),
-            //     'img_path' => str_replace('public/', '', $file_name),
-            // ]);
             $model = new Product();
             $model->registProduct($request);
-            // $model->registProduct($data);
             DB::commit();
         } catch (\Exception $e) {
             // エラーが発生した場合はトランザクションロールバック
             DB::rollback();
-            // return back()->withInput()->withErrors(['error' => '登録に失敗しました']);
             return back();
         }       
         // 処理が完了したら入力画面にリダイレクト
@@ -89,7 +96,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('show', compact('product'));
+        return view('show', compact('product'))
+            ->with('page_id', request()->page_id);
     }
 
     /**
@@ -98,7 +106,6 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    // public function edit(Product $product)
     public function edit($product)
     {
         $product = Product::findOrFail($product);
@@ -115,10 +122,8 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, Product $product)
     public function update(ProductRequest $request, Product $product)
     {
-        // dd($product);
         // トランザクション開始
         DB::beginTransaction();
 

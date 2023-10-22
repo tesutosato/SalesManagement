@@ -1,0 +1,56 @@
+main .container {
+    margin-top: 20px;
+}
+
+section {
+    padding: 20px 0;
+}
+
+.title h1 {
+    padding: 20px 0;
+    font-size: 28px;
+}
+
+.form-group {
+    width: 70%;
+    margin-bottom: 20px;
+}
+table {
+    width: 100%;
+    padding: 10px;
+    /* text-align: center; */
+}
+tr {
+    vertical-align: middle;
+}
+label.required::after {
+    content: "※";
+    color: red;
+}
+
+section.show {
+    border: 1px solid #000;
+    width: 50%;
+    padding: 20px;
+}
+
+section.show table, tr, th, td {
+    text-align: left;
+}
+
+.show th, td {
+    margin-bottom: 20px;
+}
+
+.form-group .product_img {
+    margin-top: 12px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+.flash_message {
+    width: 70%;
+    color: red;
+}

@@ -12,25 +12,47 @@
         </div>
     </div>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>商品名</th>
-            <th>商品画像</th>
-            <th>価格</th>
-            <th>在庫数</th>
-            <th>メーカー名</th>
-        </tr>
-        <tr>
-            <td>{{ $product->id }}</td>
-            <td>{{ $product->product_name }}</td>
-            <td><img src="{{ asset('storage/'.$product->img_path) }}" width="150px"></td>
-            <td>{{ $product->price }}</td>
-            <td>{{ $product->stock }}</td>
-            <td>{{ $product->company->company_name }}</td>
-        </tr>
-    </table>
-            <a class="btn btn-primary" href="{{ route('edit', ['product' => $product->id]) }}">編集</a>
-            <a class="btn btn-secondary" href="{{ route('index') }}">戻る</a>
+    <section class="show">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td>{{ $product->id }}</td>
+            </tr>
+            
+            <tr>
+                <th>商品名</th>
+                <td>{{ $product->product_name }}</td>
+            </tr>
+            
+            <tr>
+                <th>商品画像</th>
+                <td>
+                @if($product->img_path)
+                    <img src="{{ asset('storage/'.$product->img_path) }}" width="150px">
+                @else
+                    <img src="{{ asset('storage/no_picture.png') }}" width="100" alt="デフォルト画像">
+                @endif
+                </td>
+            </tr>
+            
+            <tr>
+                <th>価格</th>
+                <td>{{ $product->price }}</td>
+            </tr>
+            
+            <tr>
+                <th>在庫数</th>
+                <td>{{ $product->stock }}</td>
+            </tr>
+            
+            <tr>
+                <th>メーカー名</th>
+                <td>{{ $product->company->company_name }}</td>
+            </tr>
+            
+        </table>
+        <a class="btn btn-primary" href="{{ route('edit', ['product' => $product->id]) }}">編集</a>
+        <a class="btn btn-secondary" href="{{ route('index', ['page' => $page_id]) }}">戻る</a>
+    </section>
 
 @endsection

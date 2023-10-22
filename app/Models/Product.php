@@ -29,18 +29,14 @@ class Product extends Model
             $file_name = $data->img_path->getClientOriginalName();
             $data->img_path->storeAs('public/', $file_name);
             $this->img_path = $file_name;
-        } else {
-            $this->img_path = 'no_picture.png';
         }
-        // $file_name = $data->file('img_path')->getClientOriginalName();
 
-        // DB::table('products')->insert([
         $this->product_name = $data->input('product_name');
         $this->company_id = $data->input('company_name');
         $this->price = $data->input('price');
         $this->stock = $data->input('stock');
         $this->comment = $data->input('comment');
-        // $this->img_path = $file_name;
         $this->save();
     }
+
 }
