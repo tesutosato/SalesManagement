@@ -16,12 +16,14 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        $productNames = ['水', 'リンゴジュース', 'オレンジジュース', 'レモンジュース', 'グレープジュース', 'ピーチジュース', 'パイナップルジュース'];
+        $productName = $productNames[rand(0,count($productNames) -1)];
         return [
-            'company_id' => $this->faker->numberBetween($min = 1, $max = 50),
+            'company_id' => $this->faker->numberBetween($min = 1, $max = 81),
             'product_name' => $this->faker->realText(20),
-            'price' => $this->faker->numberBetween($min = 100, $max = 160),
-            'stock' => $this->faker->numberBetween($min = 0, $max = 20),
-            'comment' => $this->faker->realText(50),
+            'price' => $this->faker->numberBetween($min = 100, $max = 200),
+            'stock' => $this->faker->numberBetween($min = 1, $max = 20),
+            'comment' => $this->faker->realText(15),
             'img_path' => $this->faker->realText(50),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => null,

@@ -9,6 +9,11 @@ section {
 .title h1 {
     padding: 20px 0;
     font-size: 28px;
+    color: blue;
+}
+
+h1 {
+    color: aqua;
 }
 
 .form-group {
@@ -54,3 +59,18 @@ section.show table, tr, th, td {
     width: 70%;
     color: red;
 }
+#productsTable .tablesorter-header {
+    cursor: pointer;
+	outline: none;
+}
+#productsTable th {
+    background-color:lightblue;
+}
+/* .tablesorter-headerUnSorted {
+    background-image: url('sort.png');
+    background-repeat: no-repeat; */
+    /* background-position: center right; */
+/* } */
+/* .sorter-false {
+    background-image: none;
+} */ 

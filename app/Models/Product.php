@@ -18,9 +18,16 @@ class Product extends Model
         'img_path'
     ];
 
+    // Companyテーブルとのリレーション
     public function company()
     {
     return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    // Saleテーブルとのリレーション
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
     }
 
     public function registProduct($data) {

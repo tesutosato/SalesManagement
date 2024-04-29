@@ -16,39 +16,58 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index(ProductRequest $request)
     public function index(Request $request)
     {
 
+        // 全ての会社を取得して$companies変数に格納
         $companies = Company::all();
 
-        $keyword = $request->input('keyword');
         $searchField = $request->input('search_field');
 
-        $query = Product::with('company');
+        // $query = Product::with('company');
+        $query = Product::query()->with('company');
 
         // 検索機能実装
-        if (!empty($keyword) || (!empty($searchField) && $searchField != 'company_id')) {
-            $query->where(function ($query) use ($keyword, $searchField) {
-                if (!empty($keyword)) {
-                    $query->where('id', 'LIKE', "%{$keyword}%")
-                    ->orWhere('product_name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('price', 'LIKE', "%{$keyword}%")
-                    ->orWhere('stock', 'LIKE', "%{$keyword}%");
-                }
-
-                if (!empty($searchField) && $searchField != 'company_id') {
-                    $query->orWhereHas('company', function ($query) use ($searchField) {
-                        $query->where('id', $searchField);
-                    });
-                }
-            });
+        // 商品名の検索キーワードがある場合、そのキーワードを含む商品をクエリに追加
+        if($keyword = $request->keyword){
+            $query->where('product_name', 'LIKE', "%{$keyword}%");
         }
         
-        $products = $query->paginate(5);
+        // $search_fieldで選択したidと同じcompany_idをクエリに追加
+        if($search_field = $request->search_field){
+            $query->where('company_id', '=', $search_field);
+        }
+        
+        // 最小価格が指定されている場合、その価格以上の商品をクエリに追加
+        if($min_price = $request->min_price){
+            $query->where('price', '>=', $min_price);
+        }
+        
+        // 最大価格が指定されている場合、その価格以下の商品をクエリに追加
+        if($max_price = $request->max_price){
+            $query->where('price', '<=', $max_price);
+        }
+        
+        // 最小在庫数が指定されている場合、その在庫数以上の商品をクエリに追加
+        if($min_stock = $request->min_stock){
+            $query->where('stock', '>=', $min_stock);
+        }
+        
+        // 最大在庫数が指定されている場合、その在庫数以下の商品をクエリに追加
+        if($max_stock = $request->max_stock){
+            $query->where('stock', '<=', $max_stock);
+        }
+        // dd($query);
 
+        $products = $query->paginate(5);
+        
+        // return response()->json(['products' => $products,
+        //                             'companies' => $companies
+        //                             ]);
+        // }
+        // dataType: 'html'指定にすると以下２行で動く
         return view('index', compact('products', 'companies'))
-            ->with('page_id', request()->page);
+        ->with('page_id', request()->page);
     }
 
     /**
@@ -147,6 +166,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // $product = Product::findOrFail($product->id);
+        // 商品を削除
+        // dd($product);
         $product->delete();
         return redirect()->route('index')
         ->with('success', $product->name.'を削除しました');
