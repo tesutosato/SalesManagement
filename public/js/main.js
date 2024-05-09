@@ -1,4 +1,3 @@
-
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -21,10 +20,9 @@ $(document).ready(function() {
     // 検索機能の非同期処理
     $(function() {
         $('#search-btn').on('click', function(event) {
+            // HTMLでの送信をキャンセル
             event.preventDefault();
-
             let serialize = $('form').serialize();
-            console.log(serialize);
 
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -43,7 +41,6 @@ $(document).ready(function() {
             })
 
             .fail(function() {
-            // .fail(function(xhr, status, error) {
                 console.log("エラー");
             })
         })
@@ -57,7 +54,6 @@ $(document).ready(function() {
             const deleteConfirm = confirm('削除してよろしいでしょうか？');
             if(deleteConfirm) {
                 const productID = $(this).data('product_id');
-        // console.log(productID);
 
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -71,11 +67,9 @@ $(document).ready(function() {
 
                 .done(function() {
                     location.reload();
-                    // console.log("成功");
                 })
 
                 .fail(function() {
-                    // event.preventDefault();
                     alert("削除できませんでした");
                 })
             };

@@ -15,7 +15,7 @@
         <form id="productsForm" action="{{ route('index') }}" method="GET" class="row g-3">
             @csrf
 
-            <div class="btn-group mr-2" role="group" aria-label="First group">
+            <div>
                 <!-- 検索キーワードの入力欄 -->
                 <div class="col-sm-12 col-md-2">
                     <input type="text" name="keyword" class="form-control" placeholder="検索キーワード">
@@ -24,14 +24,14 @@
             <!-- メーカーのプルダウン選択欄 -->
                 <div class="col-sm-12 col-md-2">
                     <select name="search_field" id="product_search" class="form-control">
-                        <!-- <option value='company_id'>メーカー名</option> -->
                         <option value=''>メーカー名</option>
                         @foreach ($companies as $company)
                         <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                         @endforeach
                     </select>
                 </div>
-
+            </div>
+            <div>
             <!-- 最小価格の入力欄 -->
             <div class="col-sm-12 col-md-2">
                 <input type="number" name="min_price" id="min_price" class="form-control" placeholder="最小価格" value="{{ request('min_price') }}">
@@ -41,7 +41,9 @@
             <div class="col-sm-12 col-md-2">
                 <input type="number" name="max_price" id="max_price" class="form-control" placeholder="最大価格" value="{{ request('max_price') }}">
             </div>
+            </div>
 
+            <div>
             <!-- 最小在庫数の入力欄 -->
             <div class="col-sm-12 col-md-2">
                 <input type="number" name="min_stock" id="min_stock" class="form-control" placeholder="最小在庫" value="{{ request('min_stock') }}">
@@ -51,19 +53,19 @@
             <div class="col-sm-12 col-md-2">
                 <input type="number" name="max_stock" id=max_stock class="form-control" placeholder="最大在庫" value="{{ request('max_stock') }}">
             </div>
+            </div>
 
             <!-- 絞り込みボタン -->
-            <div class="col-sm-12 col-md-1">
-                <button class="btn btn-outline-secondary search-btn" id="search-btn" type="submit">絞り込み</button>
+            <div class="col-sm-12 col-md-2">
+            <!-- <div class="col-sm-12 col-md-1"> -->
+                <button class="btn btn-success search-btn" id="search-btn" type="submit">絞り込み</button>
             </div>
 
             </form>
         <!-- 検索条件をリセットするためのリンクボタン -->
-        <a href="{{ route('index') }}" class="btn btn-success mt-3">検索条件をリセット</a>
+        <a href="{{ route('index') }}" class="btn btn-secondary">検索条件をリセット</a>
+        <!-- <a href="{{ route('index') }}" class="btn btn-success mt-3">検索条件をリセット</a> -->
         </div>
-        <!-- ↑ボタンまでformで加工必要はあるのか -->
-
-        <!-- </form> -->
     </section>
 
     <section>

@@ -15,11 +15,6 @@ class Sale extends Model
     protected $table = 'sales';
     protected $dates =  ['created_at', 'updated_at'];
     protected $fillable = ['id', 'product_id'];
-    // ※一括代入の許可は要るのか
-    // protected $table = 'sale';
-    // protected $primaryKey = 'id';
-    // protected $dates =  ['created_at', 'updated_at'];
-    // protected $fillable = ['id', 'product_id'];
 
     // productテーブルとのリレーション
     public function products()
@@ -27,23 +22,11 @@ class Sale extends Model
         return $this->belongTo(Product::class);
     }
 
-    // 在庫を減らす処理
-    // public function decStock($id)
-    // public function decStock($product)
-    // {
-        // $product = $this->find($product);
-        // $product = $this->find($id);
-    // 在庫を1つ減らす
-    // $product->stock -= 1;
-    // 変更を保存
-    // $product->save();
-    // return $product;
-    // }
 
-    // 購入商品情報をDBに登録する処理
+    // Salesテーブルに購入商品IDと購入日時を記録する
     public function registSale($product)
     {
-        $this->product_id = $product->id;
+        $this->product_id = $product->id; // 主キーであるIDと、created_at , updated_atは自動入力されるため不要
         $this->save();
     }
 }

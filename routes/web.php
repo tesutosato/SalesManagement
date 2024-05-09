@@ -21,12 +21,9 @@ Route::get('/', function () {
 
 // 以下２行はAuth作成時に自動作成。消さない
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('index')->middleware('auth');
-// Route::get('/products', [App\Http\Controllers\ProductController::class, 'products'])->name('index')->middleware('auth');
-
 Route::get('/products/create', [App\Http\Controllers\ProductController::class, 'create'])->name('create')->middleware('auth');
 Route::post('/products/store', [App\Http\Controllers\ProductController::class, 'store'])->name('store')->middleware('auth');
 
@@ -37,4 +34,3 @@ Route::put('/products/edit/{product}', [App\Http\Controllers\ProductController::
 
 
 Route::delete('/products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
-// Route::post('/products/destroy/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');

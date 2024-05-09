@@ -24,7 +24,6 @@ class ProductController extends Controller
 
         $searchField = $request->input('search_field');
 
-        // $query = Product::with('company');
         $query = Product::query()->with('company');
 
         // 検索機能実装
@@ -61,11 +60,6 @@ class ProductController extends Controller
 
         $products = $query->paginate(5);
         
-        // return response()->json(['products' => $products,
-        //                             'companies' => $companies
-        //                             ]);
-        // }
-        // dataType: 'html'指定にすると以下２行で動く
         return view('index', compact('products', 'companies'))
         ->with('page_id', request()->page);
     }
@@ -166,9 +160,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // $product = Product::findOrFail($product->id);
-        // 商品を削除
-        // dd($product);
         $product->delete();
         return redirect()->route('index')
         ->with('success', $product->name.'を削除しました');
