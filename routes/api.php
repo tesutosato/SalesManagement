@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\salesController;
+use App\Http\Controllers\API\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/buy', [SalesController::class, 'buy']);
+Route::post('/buy', [App\Http\Controllers\API\SalesController::class, 'buy']);

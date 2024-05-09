@@ -46,4 +46,13 @@ class Product extends Model
         $this->save();
     }
 
+    // 在庫を減らす処理
+    public function decStock($product)
+    {
+        $product->stock -= 1;
+        // 変更を保存
+        $product->save();
+        return $product;
+    }
+
 }
